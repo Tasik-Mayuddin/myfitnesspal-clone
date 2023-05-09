@@ -1,4 +1,4 @@
-package com.tasik.projects.myfitnesspal.clone;
+package com.tasik.projects.myfitnesspal.clone.model;
 
 import java.util.ArrayList;
 import java.util.List;
