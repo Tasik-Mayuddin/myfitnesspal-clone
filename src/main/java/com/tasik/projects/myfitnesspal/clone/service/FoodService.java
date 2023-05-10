@@ -15,4 +15,8 @@ public class FoodService {
     public List<Food> getFoods() {
         return db;
     }
+
+    public void addFood(Food food) {
+        db.add(food);
+    }
 }

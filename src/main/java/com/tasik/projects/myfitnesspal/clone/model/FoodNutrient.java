@@ -1,7 +1,14 @@
 package com.tasik.projects.myfitnesspal.clone.model;
 
-public class FoodNutrient {
+
+import com.fasterxml.jackson.annotation.JsonAlias;
+
+public class FoodNutrient{
+
+    @JsonAlias({"nutrientName", "name"})
     private String nutrientName;
+
+    @JsonAlias({"value", "amount"})
     private double value;
 
     public String getNutrientName() {
