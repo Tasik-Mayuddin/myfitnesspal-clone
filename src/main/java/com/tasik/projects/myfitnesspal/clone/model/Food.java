@@ -1,32 +1,50 @@
 package com.tasik.projects.myfitnesspal.clone.model;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "food_table")
 public class Food {
-    private final int id;
-    private String desc;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    @Column
+    private int fdcId;
+    @Column
+    private String name;
+    @Column
     private double carb;
+    @Column
     private double fat;
+    @Column
     private double protein;
+    @Column
     private double kcal;
 
-    public Food(int id, String desc, double carb, double fat, double protein) {
-        this.id = id;
-        this.desc = desc;
+    public Food() {
+
+    }
+
+    public Food(int fdcId, String name, double carb, double fat, double protein) {
+        this.fdcId = fdcId;
+        this.name = name;
         this.carb = carb;
         this.fat = fat;
         this.protein = protein;
         calculateKcal();
     }
 
-    public int getId() {
-        return id;
+    public int getFdcId() {
+        return fdcId;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getName() {
+        return name;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public double getCarb() {
