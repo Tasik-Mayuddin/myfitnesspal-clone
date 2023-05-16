@@ -30,43 +30,23 @@ public class MyFitnessPalController {
     }
 
     @PostMapping("/foods")
-    public List<Food> addFood(@RequestParam int fdcId) {
-        String uri = "https://api.nal.usda.gov/fdc/v1/food/" + fdcId + "?api_key=pBXvd6dJmtKICUJFccfOtOFx62abhB91gH6q8Gjd&nutrients=203, 204, 205&format=abridged";
-        RestTemplate restTemplate = new RestTemplate();
-        FoodItem result = restTemplate.getForObject(uri, FoodItem.class);
-        foodService.addFood(foodCreation(result));
-        return listFoods();
+    public Food addFood(@RequestParam int fdcId) {
+        return foodService.addFood(fdcId);
     }
 
     @GetMapping("/search")
     public List<Food> querySearch(@RequestParam String query) {
-        String uri = "https://api.nal.usda.gov/fdc/v1/foods/search?api_key=pBXvd6dJmtKICUJFccfOtOFx62abhB91gH6q8Gjd&query=" + query;
-        RestTemplate restTemplate = new RestTemplate();
-        SearchResult result = restTemplate.getForObject(uri, SearchResult.class);
-
-        List<Food> convertedFood = new ArrayList<Food>();
-        for (FoodItem x : result.getFoods()) {
-            convertedFood.add(foodCreation(x));
-        }
-        return convertedFood;
+        return foodService.querySearch(query);
     }
 
-    private Food foodCreation(FoodItem foodItem) {
-        double protein = 0;
-        double carb = 0;
-        double fat = 0;
-        for (FoodNutrient y : foodItem.getFoodNutrients()) {
-            if (y.getNutrientName().equals("Protein")) {
-                protein = y.getValue();
-            }
-            else if (y.getNutrientName().equals("Carbohydrate, by difference")) {
-                carb = y.getValue();
-            }
-            else if (y.getNutrientName().equals("Total lipid (fat)")) {
-                fat = y.getValue();
-            }
-        }
-
-        return new Food(foodItem.getFdcId(), foodItem.getDescription(), carb, fat, protein);
+    @GetMapping("/diary")
+    public Diary showDiary() {
+        return foodService.showDiary();
     }
+
+    @PostMapping("/diary")
+    public void addToDiary(@RequestParam int fdcId) {
+        foodService.addToDiary(fdcId);
+    }
+
 }
